@@ -15,6 +15,13 @@ function List(props) {
             title={card.title}
             content={card.content} />
         ))}
+        <button
+          type='button'
+          className='List-add-button'
+          onClick={() => props.onAddItem(props.item)}
+        >
+          + Add Random Card
+        </button>
       </div>
     </section>
   );

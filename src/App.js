@@ -1,35 +1,58 @@
-import React from 'react';
-import './App.css';
-import List from './List'
+import React from "react";
+import AddItemForm from './shopping-list/AddItemForm';
+import ShoppingList from './shopping-list/ShoppingList';
 
 class App extends React.Component {
-  static defaultProps = {
-    store: {
-      lists: [],
-      allCards: {}
-    }
+  state = {
+    shoppingItems: [
+      /* put stub items in here for testing */
+      { name: 'apples', checked: false },
+      { name: 'oranges', checked: true },
+      { name: 'bread', checked: false },
+    ]
   };
-  
+
+  handleDeleteItem = (item) => {
+    console.log('handle delete item called', { item })
+    const newItems = this.state.shoppingItems.filter(itm => itm !== item)
+    this.setState({
+     shoppingItems: newItems
+    })
+  }
+  handleCheckItem = (item) => {
+    console.log('handle check item called', { item })
+    const newItems = this.state.shoppingItems.map(itm => {
+      if (itm === item) {
+        itm.checked = !itm.checked
+      }
+      return itm
+    })
+    this.setState({
+      shoppingItems: newItems
+    })
+  }
+
   render() {
-    const { store } = this.props
     return (
-      <main className='App'>
-        <header className='App-header'>
-          <h1> Trelloyes!</h1>
+      <>
+        <header>
+          <h1>Shopping List</h1>
         </header>
-        <div className='App-list'>
-          {store.lists.map(list => (
-            <List
-              key={list.id}
-              header={list.header}
-              cards={list.cardIds.map(id => store.allCards[id])}
+        <main>
+          <section>
+            <AddItemForm />
+          </section>
+          <section>
+            <ShoppingList 
+              items={this.state.shoppingItems}
+              onDeleteItem={this.handleDeleteItem}
+              onCheckItem={this.handleCheckItem}
             />
-          ))}
-        </div>
-      </main>
-    );
+          </section>
+        </main>
+      </>
+    )
   }
 }
 
-
-export default App;
+export default App
