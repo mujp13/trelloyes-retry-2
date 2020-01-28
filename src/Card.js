@@ -3,12 +3,12 @@ import './Card.css';
 
 function Card(props) {
   return (
-    <div className='Card'>
+    <div className="Card">
       <button 
-        onClick={props.onDeleteCard}
-        type='button'>
+        onClick={() => props.onDeleteCard(props.id)}
+        type="button">
         delete
-        </button>
+      </button>
       <h3>{props.title}</h3>
       <p>{props.content}</p>
     </div>
@@ -16,3 +16,7 @@ function Card(props) {
 }
 
 export default Card;
+
+Card.propTypes = {
+  onClickDelete: () => {}
+}
